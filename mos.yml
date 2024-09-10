@@ -1,0 +1,50 @@
+author: Eugene Polyakoff
+type: lib
+description: ESP8266Audio (by Earle F. Philhower, III) adaptation for Mongoose OS, removed all *Source* files which using Arduino FS
+version: 1.0
+
+sources:
+  - src
+  - src/driver
+#  - src/libflac
+#  - src/libhelix-aac
+#  - src/libhelix-mp3
+  - src/libmad
+  - src/libogg
+#  - src/libopus
+#  - src/libopus/celt
+#  - src/libopus/silk
+#  - src/libopus/silk/fixed
+#  - src/libtinysoundfont
+#  - src/opusfile
+#includes:
+#  - include
+
+filesystem:
+  - fs
+
+config_schema:
+  - ["audio", "o", {title: "Audio settings"}]
+  - ["audio.enable", "b", true, {title: "Enable audio"}]
+  - ["audio.volume", "i", 100, {title: "Sound volume from 0 to 100"}]
+  - ["audio.mono", "b", false, {title: "Sound mode is mono or not"}]
+  - ["audio.debug", "b", true, {title: "Debug messages"}]
+  - ["audio.output", "s", "i2s", {title: "Type of output: i2s/dac/pdm/spdif"}]
+  - ["audio.apll", "i", 0, {title: "APLL 0:disable, 1:enable, -1:auto"}]
+  - ["audio.i2s_bclk_pin", "i", -1, {title: "I2S BCK pin"}]
+  - ["audio.i2s_wclk_pin", "i", -1, {title: "I2S WCK/LRCK pin"}]
+  - ["audio.i2s_dout_pin", "i", -1, {title: "Connect to DIN pin of I2S DAC, LED of SPDIF, or transistor in PDM"}]
+
+libs:
+  - location: https://github.com/mongoose-os-libs/arduino-compat
+
+tags:
+  - c
+  - hw
+
+manifest_version: 2017-09-29
+
+build_vars:
+  ESP_IDF_SDKCONFIG_OPTS: >
+    ${build_vars.ESP_IDF_SDKCONFIG_OPTS}
+    CONFIG_PM_ENABLE=y
